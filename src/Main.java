@@ -4,9 +4,9 @@ public class Main {
     public static int bossHealth = 700;
     public static int bossDamage = 50;
     public static String bossDefence;
-    public static int[] heroesHealth = {280, 270, 250, 220, 500};
-    public static int[] heroesDamage = {10, 15, 20, 0, 5};
-    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic" ,"Medic", "Golem",};
+    public static int[] heroesHealth = {280, 270, 250, 220, 500, 200, 260};
+    public static int[] heroesDamage = {10, 15, 20, 0, 5, 5, 5};
+    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic" ,"Medic", "Golem", "Lucky","Thor"};
     public static int roundNumber = 0;
     public static void main(String[] args) {
         printStatistics();
@@ -18,11 +18,41 @@ public class Main {
     public static void playRound() {
         roundNumber++;
         chooseBossDefence();
+        thor();
         bossHits();
         medic();
         golem();
+        lucky();
+
         heroesHit();
         printStatistics();
+    }
+
+    private static void thor() {
+        Random random = new Random();
+        boolean thor = random.nextBoolean();
+        for (int i = 0; i <heroesHealth.length; i++) {
+            if (heroesHealth[i] == heroesHealth[6] && heroesHealth[6] > 0 && thor) {
+                bossDamage = 0;
+            }else {
+                bossDamage = 50;
+            }
+        }
+    }
+
+    private static void lucky() {
+        for (int i = 0; i < heroesHealth.length; i++) {
+            Random random = new Random();
+            boolean lucky = random.nextBoolean();
+            if (heroesHealth[i] == heroesHealth[5] && heroesHealth[5] > 0 && lucky) {
+                bossDamage = 0;
+            }else {
+                bossDamage = 50;
+            }
+            if (heroesHealth[i] != heroesHealth[5]) {
+                bossDamage = 50;
+            }
+        }
     }
 
     private static void golem() {
